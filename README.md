@@ -189,6 +189,4 @@ Créditos
 
 Hugging Face: El modelo BLOOM y la librería transformers.
 Tkinter: Para la creación de la interfaz gráfica. 
-GitHub: TakizawaXD Para el repositorio de este proyecto.#   C h a t B o t 
- 
- 
+GitHub: TakizawaXD Para el repositorio de este proyecto
