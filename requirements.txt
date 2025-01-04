@@ -1,0 +1,4 @@
+transformers==4.34.0
+torch==2.1.0
+tk==0.1.0
+pip install -r requirements.txt
