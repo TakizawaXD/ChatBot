@@ -27,44 +27,6 @@ Puedes instalar las dependencias ejecutando el siguiente comando:
 pip install transformers
 ```
 
-Instalación de Tkinter
-
-Si estás utilizando un sistema Linux, es posible que necesites instalar tkinter manualmente. Puedes hacerlo con:
-
-En Ubuntu/Debian:
-
-```bash
-sudo apt-get install python3-tk
-```
-
-En Fedora:
-
-```bash
-sudo dnf install python3-tkinter
-```
-
-En Windows y macOS, generalmente tkinter ya está incluido con la instalación estándar de Python.
-
-Uso
-
-Paso 1: Ejecuta el script
-
-Una vez que hayas instalado todas las dependencias necesarias, ejecuta el archivo Python con:
-
-```bash
-python generador_texto.py
-```
-
-Esto abrirá la interfaz gráfica de la aplicación.
-
-Paso 2: Ingresa un texto inicial
-
-En la ventana de la aplicación, verás un campo de entrada. Ingresa un texto que quieras que el modelo continúe o complete. Este texto será el punto de partida para la generación.
-
-Paso 3: Configura los parámetros (Opcional)
-
-La aplicación permite que se configuren los siguientes parámetros:
-
 - Max Length: Longitud máxima del texto generado.
 - Temperature: Controla la creatividad del modelo. A temperaturas más altas (por ejemplo, 1.0), el modelo es más aleatorio. A temperaturas más bajas (por ejemplo, 0.2), las respuestas son más conservadoras.
 - Top K: Determina cuántas palabras o tokens se consideran durante la generación. Valores más bajos hacen que la salida sea más coherente, pero menos creativa.
@@ -180,10 +142,6 @@ Si deseas mejorar el proyecto, puedes hacerlo a través de un fork y enviar un p
 - Añadir más modelos de lenguaje o soporte para otros idiomas.
 - Mejorar la interfaz gráfica con más opciones de personalización.
 - Agregar funcionalidades adicionales como la posibilidad de guardar el texto generado.
-
-Licencia
-
-Este proyecto está bajo la licencia MIT. Puedes hacer lo que desees con el código, siempre que se incluya la atribución correspondiente.
 
 Créditos
 
