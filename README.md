@@ -8,11 +8,11 @@ El generador permite que los usuarios ingresen un texto inicial, seleccionen alg
 
 ## Características
 
-- **Generación de texto:** Basado en el modelo **BLOOM-560M**, una red neuronal entrenada para generar texto.
-- **Interfaz Gráfica:** Desarrollada con **Tkinter** para una experiencia de usuario fluida y sencilla.
-- **Configuración personalizada:** Permite al usuario ajustar parámetros como la longitud del texto, la creatividad, el número de resultados y más.
-- **Salida visual:** Los textos generados se muestran en un área de texto desplazable que permite ver múltiples resultados.
-- **Fácil de usar:** Simplemente ingresa un texto inicial y haz clic en "Generar Texto" para obtener las continuaciones.
+- **Generación de texto**: Basado en el modelo **BLOOM-560M**, una red neuronal entrenada para generar texto.
+- **Interfaz Gráfica**: Desarrollada con **Tkinter** para una experiencia de usuario fluida y sencilla.
+- **Configuración personalizada**: Permite al usuario ajustar parámetros como la longitud del texto, la creatividad, el número de resultados y más.
+- **Salida visual**: Los textos generados se muestran en un área de texto desplazable que permite ver múltiples resultados.
+- **Fácil de usar**: Simplemente ingresa un texto inicial y haz clic en "Generar Texto" para obtener las continuaciones.
 
 ## Requisitos
 
@@ -23,39 +23,53 @@ Antes de ejecutar este proyecto, asegúrate de tener instaladas las dependencias
 
 Puedes instalar las dependencias ejecutando el siguiente comando:
 
-```python
+```
 pip install transformers
 ```
 
-- Max Length: Longitud máxima del texto generado.
-- Temperature: Controla la creatividad del modelo. A temperaturas más altas (por ejemplo, 1.0), el modelo es más aleatorio. A temperaturas más bajas (por ejemplo, 0.2), las respuestas son más conservadoras.
-- Top K: Determina cuántas palabras o tokens se consideran durante la generación. Valores más bajos hacen que la salida sea más coherente, pero menos creativa.
-- Num Return Sequences: Cuántas secuencias de texto se generan.
+## Parámetros del Modelo
 
-Paso 4: Haz clic en "Generar Texto"
+- **Max Length**: Longitud máxima del texto generado.
+- **Temperature**: Controla la creatividad del modelo. A temperaturas más altas (por ejemplo, 1.0), el modelo es más aleatorio. A temperaturas más bajas (por ejemplo, 0.2), las respuestas son más conservadoras.
+- **Top K**: Determina cuántas palabras o tokens se consideran durante la generación. Valores más bajos hacen que la salida sea más coherente, pero menos creativa.
+- **Num Return Sequences**: Cuántas secuencias de texto se generan.
 
-Haz clic en el botón Generar Texto para que el modelo procese el texto inicial y genere las continuaciones. Los resultados aparecerán en el área de texto de la parte inferior.
+## Flujo de la aplicación
 
-Paso 5: Salir
+### Paso 1: Ingresar el Texto Inicial
 
-Si deseas cerrar la aplicación, simplemente escribe salir en el campo de entrada y presiona el botón Generar Texto. La aplicación se cerrará automáticamente.
+El usuario debe ingresar un texto inicial en el campo correspondiente en la interfaz gráfica.
 
-Código
+### Paso 2: Configurar los Parámetros
 
-El archivo principal de este proyecto es generador_texto.py, que contiene el código necesario para cargar el modelo de lenguaje, generar texto y manejar la interfaz gráfica. A continuación, se describe el flujo del código:
+El usuario puede ajustar los parámetros del modelo según sus preferencias, como la longitud del texto, la creatividad, y el número de secuencias a generar.
 
-Carga del Modelo
+### Paso 3: Generar Texto
 
-El modelo y el tokenizador de BLOOM se cargan utilizando la librería transformers de Hugging Face:
+Haz clic en el botón **Generar Texto** para que el modelo procese el texto inicial y genere las continuaciones. Los resultados aparecerán en el área de texto de la parte inferior.
+
+### Paso 4: Salir
+
+Si deseas cerrar la aplicación, simplemente escribe **salir** en el campo de entrada y presiona el botón **Generar Texto**. La aplicación se cerrará automáticamente.
+
+## Código
+
+El archivo principal de este proyecto es `generador_texto.py`, que contiene el código necesario para cargar el modelo de lenguaje, generar texto y manejar la interfaz gráfica. A continuación, se describe el flujo del código:
+
+### Carga del Modelo
+
+El modelo y el tokenizador de **BLOOM** se cargan utilizando la librería **transformers** de Hugging Face:
 
 ```python
+from transformers import AutoTokenizer, AutoModelForCausalLM
+
 tokenizer = AutoTokenizer.from_pretrained("bigscience/bloom-560m")
 model = AutoModelForCausalLM.from_pretrained("bigscience/bloom-560m")
 ```
 
-Función de Generación de Texto
+### Función de Generación de Texto
 
-La función generar_texto toma un texto inicial y otros parámetros como la longitud máxima y el número de secuencias de texto a generar. Esta función procesa el texto con el modelo y devuelve las secuencias generadas:
+La función `generar_texto` toma un texto inicial y otros parámetros como la longitud máxima y el número de secuencias de texto a generar. Esta función procesa el texto con el modelo y devuelve las secuencias generadas:
 
 ```python
 def generar_texto(texto_inicial, max_length=100, temperature=0.7, top_k=50, num_return_sequences=1):
@@ -90,11 +104,14 @@ def generar_texto(texto_inicial, max_length=100, temperature=0.7, top_k=50, num_
     return textos_generados
 ```
 
-Interfaz Gráfica
+### Interfaz Gráfica
 
-La interfaz gráfica está construida utilizando Tkinter. Se define una ventana principal con un campo de entrada para el texto inicial, un botón para generar el texto y un área de texto desplazable para mostrar los resultados:
+La interfaz gráfica está construida utilizando **Tkinter**. Se define una ventana principal con un campo de entrada para el texto inicial, un botón para generar el texto y un área de texto desplazable para mostrar los resultados:
 
 ```python
+import tkinter as tk
+from tkinter import scrolledtext
+
 root = tk.Tk()
 root.title("Generador de Texto con BLOOM")          
 root.geometry("700x500")
@@ -127,15 +144,7 @@ output_text.pack(pady=20)
 root.mainloop()
 ```
 
-Parámetros del Modelo
-
-texto_inicial: El texto base que se utiliza para la generación.
-max_length: Longitud máxima del texto generado. (Por defecto 100)
-temperature: Controla el nivel de creatividad. Un valor más alto (por ejemplo, 1.0) hace que las respuestas sean más variadas.
-top_k: Número de posibles palabras que el modelo considera durante la generación.
-num_return_sequences: Cuántas secuencias generadas se devuelven.
-
-Contribución
+## Contribución
 
 Si deseas mejorar el proyecto, puedes hacerlo a través de un fork y enviar un pull request. Algunas ideas para mejoras incluyen:
 
@@ -143,10 +152,171 @@ Si deseas mejorar el proyecto, puedes hacerlo a través de un fork y enviar un p
 - Mejorar la interfaz gráfica con más opciones de personalización.
 - Agregar funcionalidades adicionales como la posibilidad de guardar el texto generado.
 
-Créditos
+## Créditos
 
-Hugging Face: El modelo BLOOM y la librería transformers.
-Tkinter: Para la creación de la interfaz gráfica. 
-GitHub: TakizawaXD Para el repositorio de este proyecto
+- **Hugging Face**: El modelo BLOOM y la librería transformers.
+- **Tkinter**: Para la creación de la interfaz gráfica. 
+- **GitHub**: TakizawaXD para el repositorio de este proyecto.
 
-https://camper-ia.netlify.app/
+## Diagrama de Flujo
+
+```plaintext
++----------------------------+
+|   Inicio del Programa      |
++----------------------------+
+              |
+              v
++----------------------------+
+|   El usuario ingresa texto |
++----------------------------+
+              |
+              v
++----------------------------+
+|   El texto es procesado    |
+|    por el modelo BLOOM     |
++----------------------------+
+              |
+              v
++----------------------------+
+|    Mostrar el resultado    |
+|   (Texto generado)         |
++----------------------------+
+              |
+              v
++----------------------------+
+|   ¿Usuario escribe 'salir'?|
++----------------------------+
+              |
+      +-------+-------+
+      |               |
+      v               v
++------------------+    +----------------------------+
+|  Fin del Programa|    | Continúa esperando nuevo  |
+|  (mensaje final) |    | texto                      |
++------------------+    +----------------------------+
+```
+
+---
+
+# **Analizador de Sentimientos con Transformers**
+
+## **Descripción**
+
+Este proyecto es un analizador de sentimientos basado en el modelo de lenguaje de **Hugging Face**, que utiliza el pipeline de `sentiment-analysis` para clasificar un texto como **POSITIVO** o **NEGATIVO**. El programa interactúa con el usuario en la consola, donde puede ingresar cualquier texto y recibir el resultado del análisis junto con un nivel de confianza.
+
+## **Funcionalidades**
+
+- **Análisis de Sentimientos**: El programa utiliza el modelo de Hugging Face para clasificar textos como positivos o negativos.
+- **Interactividad**: El usuario puede ingresar textos de manera repetida y obtener los resultados en tiempo real.
+- **Salida**: El análisis se realiza en la consola, y
+
+ el resultado incluye la clasificación de sentimiento y el nivel de confianza.
+- **Opción de Salir**: El usuario puede escribir `salir` para terminar el análisis y cerrar el programa.
+
+## **Requisitos**
+
+Este proyecto utiliza Python y la librería `transformers` de Hugging Face. Asegúrate de tener Python 3.6 o superior instalado.
+
+### **Instalación de dependencias**
+
+1. **Instalar Python**: Si no tienes Python instalado, puedes descargarlo desde [aquí](https://www.python.org/downloads/).
+2. **Instalar las dependencias**:
+
+   Abre tu terminal o consola y ejecuta el siguiente comando para instalar la librería `transformers`:
+
+   ```bash
+   pip install transformers
+   ```
+
+3. Instalar **torch** (si no está instalado automáticamente):
+
+   ```bash
+   pip install torch
+   ```
+
+### **Ejecutar el script**:
+
+Guarda el código en un archivo llamado `analizador_sentimientos.py`. Para ejecutar el script, usa el siguiente comando:
+
+```bash
+python analizador_sentimientos.py
+```
+
+## **Ejemplo de ejecución**
+
+```bash
+¡Bienvenido al analizador de sentimientos! 😊
+Escribe un texto y te diré si el sentimiento es POSITIVO o NEGATIVO.
+Para salir, escribe 'salir'.
+
+Ingresa un texto: Me siento muy feliz hoy
+Resultado: POSITIVO (confianza: 0.99)
+
+Ingresa un texto: Estoy muy triste
+Resultado: NEGATIVO (confianza: 0.95)
+
+Ingresa un texto: salir
+¡Gracias por usar el analizador de sentimientos! 🌟
+```
+
+### Diagrama de flujo
+
+```plaintext
++----------------------------+
+|   Inicio del Programa      |
++----------------------------+
+              |
+              v
++----------------------------+
+|   El usuario ingresa texto |
++----------------------------+
+              |
+              v
++----------------------------+
+|   El texto es analizado    |
+|    por la API de           |
+|    Sentimientos (simulado) |
++----------------------------+
+              |
+              v
++----------------------------+
+|    Resultado analizado     |
+|   (Sentimiento + Confianza)|
++----------------------------+
+              |
+              v
++----------------------------+
+|    Muestra el resultado    |
+|   en la interfaz           |
++----------------------------+
+              |
+              v
++----------------------------+
+|   ¿Usuario escribe 'salir'?|
++----------------------------+
+              |
+      +-------+-------+
+      |               |
+      v               v
++------------------+    +----------------------------+
+|  Fin del Programa|    | Continúa esperando nuevo  |
+|  (mensaje final) |    | texto                      |
++------------------+    +----------------------------+
+```
+
+
+
+
+Proyecto 1 - Generador de Texto con BLOOM
+
+https://github.com/TakizawaXD/ChatBot
+
+
+
+proyecto 2 - Analizador de Sentimientos con Transformers
+
+https://psicoloia.netlify.app/
+
+Proyecto 3 - IA DE IMAGENES CON TRANSFORMERS
+
+https://huggingface.co/spaces/AndresTaker/IATAKER/blob/main/README.md?code=true
